@@ -40,10 +40,16 @@ public class Sommet{
 	
 	@Override
 	public String toString() {
-		String str = id+":(";
-		for (int i=0; i<voisins.size()-1; i++)
-			str += voisins.get(i).id + ",";
-		return str + voisins.get(voisins.size()-1).id + ")";
+		String str = "Sommet n°" + id + " a les voisins suivants:\n(";
+		if(voisins.isEmpty()){
+			str += " n'a aucun voisin.\n";
+		}
+		else{
+			for (int i=0; i<voisins.size()-1; i++)
+				str += voisins.get(i).id + ",";
+			str += voisins.get(voisins.size()-1).id + ");";
+		}
+		return str;
 	}
 
 	public String toDot(){

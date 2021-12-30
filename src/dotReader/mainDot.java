@@ -11,12 +11,15 @@ public class mainDot {
         "\n----------------------------------------------\n" +
         "Lecteur de fichier DOT par ligne de Commande\n" +
         "----------------------------------------------\n" +
-        "Vous pouvez entrer le parcours de votre propre fichier.txt contenant un graphe en langage dot" +
-        " ou vous pouvez utiliser les fichiers de test suivants.\n" + 
+        "Vous pouvez entrer le parcours de votre propre fichier.txt contenant un graphe en langage dot.\n" +
+        "Ou vous pouvez utiliser les fichiers de test du package. Il y en a sept en total qui couvrent sept differents types de graphes.\n" + 
+        "Graphe non orienté : basique, pondéré, coloré et mixte.\n" +
+        "Graphe orienté: graphe orienté simple, pondéré et mixte avec couleurs.\n" +
         "Entrez 1 pour choisir votre fichier ou 2 pour utiliser les fichiers de test:"); 
 
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
+        sc.nextLine();
 
         if(choice == 1){
             System.out.println("Vous avez choisi d'utiliser votre fichier.\nEntrez le chemin de votre fichier dot:");
@@ -25,33 +28,55 @@ public class mainDot {
 
             reader.readDot();
 
+            System.out.println("\nFichier chargé. Lecture en cours...\n");
+
             if(reader.flagOriented){
                 GrapheOriente resultat = reader.grapheO;
+                System.out.println("Lecture terminée. Instance de graphe orienté crée.");
+                System.out.println("Instance de graphe en langage dot:");
                 System.out.println(resultat.toDot());
+                System.out.println("Affichage du contenu du graphe(toString):");
+                System.out.println(resultat.toString());
             }
             else if(reader.flagColored && reader.flagWeighted){
                 GrapheColoré resultat = reader.grapheC;
+                System.out.println("Lecture terminée. Instance de graphe coloré et pondéré crée.");
+                System.out.println("Instance de graphe en langage dot:");
                 System.out.println(resultat.toDot());
+                System.out.println("Affichage du contenu du graphe(toString):");
+                System.out.println(resultat.toString());
             }
             else if(reader.flagColored){
                 GrapheColoré resultat = reader.grapheC;
+                System.out.println("Lecture terminée. Instance de graphe coloré crée.");
+                System.out.println("Instance de graphe en langage dot:");
                 System.out.println(resultat.toDot());
+                System.out.println("Affichage du contenu du graphe(toString):");
+                System.out.println(resultat.toString());
             }
             else if(reader.flagWeighted){
                 GraphePonderé resultat = reader.grapheP;
+                System.out.println("Lecture terminée. Instance de graphe pondéré crée.");
+                System.out.println("Instance de graphe en langage dot:");
                 System.out.println(resultat.toDot());
+                System.out.println("Affichage du contenu du graphe(toString):");
+                System.out.println(resultat.toString());
             }
             else{
                 GraphePonderé resultat = reader.grapheP;
+                System.out.println("Lecture terminée. Instance de graphe basique crée.");
+                System.out.println("Graphe en langage dot:");
                 System.out.println(resultat.toDot());
+                System.out.println("Affichage du contenu du graphe(toString):");
+                System.out.println(resultat.toString());
             }
         }
 
         else if(choice== 2){
 
             System.out.println("Vous avez choisi d'utiliser les fichiers de test du programme.\n" +
-                "Ce programme contient 6 fichiers de test dans deux catégories: graphe orienté ou pas.\n" +
-                "Chaque catégorie supporte le poids des arets et le couleurs des sommets."
+                "\nCe programme contient 7 fichiers de test dans deux catégories: graphe orienté ou pas.\n" +
+                "\nChaque catégorie supporte le poids des arets et le couleurs des sommets.\n"
             );
 
             System.out.println("Ce test teste un graphe basique (non orienté sans poids et sans couleur):");

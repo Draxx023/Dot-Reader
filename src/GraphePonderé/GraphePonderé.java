@@ -38,7 +38,7 @@ public class GraphePonderé extends GrapheBasique {
 	public String toString() {
 		String str="";
 		for (int i=0; i<size; i++)
-			str+=sommetsPonderés.get(i)+" ";
+			str+=sommetsPonderés.get(i);
 
 		return str;
 	}

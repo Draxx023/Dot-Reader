@@ -28,6 +28,33 @@ public class SommetColoré extends SommetPonderé{
 		return poids.get(voisinsColorés.indexOf(v));
 	}
 
+    public String toString() {
+		String str = "Sommet n°" + id;
+		if(voisinsColorés.isEmpty()){
+			str += " n'a aucun voisin.\n";
+		}
+		else{
+			if(color != ""){
+				str += " de coleur " + this.color;
+			}
+			str += " a les voisins suivants:\n\t(";
+			for (int i=0; i<voisinsColorés.size()-1; i++){
+				if(poids.get(i)!=0)
+					str+=voisinsColorés.get(i).id + "(poids arête: " + poids.get(i) + "), ";
+				else
+					str+=voisinsColorés.get(i).id + "), ";
+			}
+			if(voisinsColorés.size()>0){
+				int end = voisinsColorés.size()-1;
+				if(poids.get(end)!=0) 
+					str += voisinsColorés.get(end).id + "(poids arête: " + poids.get(end) + "));\n";
+				else 
+					str += voisinsColorés.get(end).id + ");\n";
+			}
+		}
+		return str;
+	}
+
     public String toDot(){
 		// Cette methode écrit tous les voisins de ce sommet un après l'autre et ajoute le poids de chacun de ces arrets
 		String str="";

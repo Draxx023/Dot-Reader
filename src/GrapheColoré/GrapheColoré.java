@@ -25,7 +25,7 @@ public class GrapheColoré extends GraphePonderé{
 	public String toString() {
 		String str="";
 		for (int i=0; i<size; i++)
-			str+=sommetsColorés.get(i)+" ";
+			str+=sommetsColorés.get(i);
 
 		return str;
 	}

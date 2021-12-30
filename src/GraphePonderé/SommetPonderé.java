@@ -28,11 +28,25 @@ public class SommetPonderé extends Sommet{
 
     @Override
 	public String toString() {
-		String str=id+":(";
-		for (int i=0; i<voisinsPonderés.size()-1; i++)
-			str+=voisinsPonderés.get(i).id + "(" + poids.get(i) + "), ";
-        int end = voisinsPonderés.size()-1; 
-		return str + voisinsPonderés.get(end).id + poids.get(end) + ")\n";
+		String str = "Sommet n°" + id;
+		if(voisinsPonderés.isEmpty()){
+			str += " n'a aucun voisin.\n";
+		}
+		else{
+			str += " a les voisins suivants:\n\t(";
+			for (int i=0; i<voisinsPonderés.size()-1; i++){
+				if(poids.get(i)!=0)
+					str+=voisinsPonderés.get(i).id + " (poids arête:" + poids.get(i) + "), ";
+				else
+					str+=voisinsPonderés.get(i).id + ", ";
+			}
+			int end = voisinsPonderés.size()-1; 
+			if(poids.get(end)!=0)
+				str += voisinsPonderés.get(end).id + " (poids arête: " + poids.get(end) + "));\n";
+			else
+				str += voisinsPonderés.get(end).id + ");\n";
+		}
+		return str;
 	}
 
     @Override

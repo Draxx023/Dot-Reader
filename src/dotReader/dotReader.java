@@ -1,5 +1,9 @@
 package dotReader;
 
+/*
+	Cette classe contient toutes les méthodes utilisés pour lire un fichier dot.
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.AbstractMap;
@@ -30,10 +34,12 @@ public class dotReader {
 
     String path;
 
+	// Constructor
     public dotReader(String Path){
         path=Path;
     }
 
+	// identifies whether or not a header belongs to an oriented or not graph
 	public int orientedOrNot(String header){
 		if(header.matches("graph [a-zA-Z].*\\{"))
 			return 0;
@@ -44,6 +50,7 @@ public class dotReader {
 			return -1;
 	}
 
+	// identifies a weighted node connection
 	public boolean isWeightedNode(String line){
 		if(line.matches("([0-9]{1,}) -[->] ([0-9]{1,}) \\[label=\"([0-9]{1,})\"\\];"))
 			return true;
@@ -51,6 +58,7 @@ public class dotReader {
 			return false;
 	}
 
+	// identifies a colored node
 	public boolean isColoredNode(String line){
 		if(line.matches("[0-9]{1,} \\[color=\".*\"\\];"))
 			return true;
@@ -58,6 +66,7 @@ public class dotReader {
 			return false;
 	}
 
+	// identifies a non weighted node connection
 	public boolean isNotWeighted(String line){
 		if(line.matches("([0-9]{1,}) -[->] ([0-9]{1,});"))
 			return true;
@@ -65,6 +74,7 @@ public class dotReader {
 			return false;
 	}
 	
+	// extracts nodes identifiers using a regular expression (regex)
 	public Vector<Integer> findNodes(String line){
 		// regex pour trouver un nombre
 		Pattern p1 = Pattern.compile("([0-9]{1,}) -[->] ([0-9]{1,});", Pattern.MULTILINE);
@@ -84,6 +94,8 @@ public class dotReader {
 		}
 		return null;
 	}
+
+	// extracts weighted node connection information
 	public Vector<Integer> findNodesWeighted(String line){
 		// regex pour trouver un nombre
 		Pattern p1 = Pattern.compile("([0-9]{1,}) -[->] ([0-9]{1,}) \\[label=\"([0-9]{1,})\"\\];", Pattern.MULTILINE);
@@ -105,20 +117,23 @@ public class dotReader {
 		return null;
 	}
 
-	// map.entry<int,str> a la meme fonction que pair<int,string>
-
+	// extracts the color
 	public Map.Entry<Integer,String> findColor(String line){
 		Pattern p1 = Pattern.compile("([0-9]{1,}) \\[color=\"(.*)\"\\];", Pattern.MULTILINE);
 		Matcher matcher = p1.matcher(line);
 		if(matcher.matches()){
 			int sommet = Integer.parseInt(matcher.group(1));
 			String color = matcher.group(2);
+			// map.entry<int,str> a la meme fonction que pair<int,string> dans c++
 			Map.Entry<Integer,String> node = new AbstractMap.SimpleEntry<Integer,String>(sommet,color);
 			return node;
 		}
 		return null;
 	}
 
+	// les fontions suivantes sont pour éviter les répetitions de code au sein de la fonction principale
+
+	// logical function which role is to extract the right node information according to node connection type
 	public void getNodes(Vector<Vector<Integer>> nodes, String ligne){
 		if(isWeightedNode(ligne)){
 			flagWeighted=true;
@@ -129,6 +144,7 @@ public class dotReader {
 		}
 	}
 
+	// extracts colors
 	public void getColors(HashMap<Integer,String> colors, String ligne){
 		if(isColoredNode(ligne)){
 			flagColored=true;
@@ -137,6 +153,7 @@ public class dotReader {
 		}
 	}
 
+	// finds the minimal graph size to store all nodes
 	public int findGraphSize(Vector<Vector<Integer>> nodes){
 		int nombreSommets=0;
 		for(Vector<Integer> node: nodes){
@@ -147,6 +164,7 @@ public class dotReader {
 		return nombreSommets;
 	}
     
+	// this is the principal function
     public void readDot(){
 		try {
 			// Access file -> Apply Scanner -> Extract the first line's words to verify the correct syntax.
@@ -232,6 +250,7 @@ public class dotReader {
 
 			}
 
+			// Erreur de syntax
 			else{
 				System.out.println("Wrong header syntax: either graph graph_name{ or digraph graph_name{.\n");
 			}
@@ -239,6 +258,7 @@ public class dotReader {
 			myReader.close();
 		}
 
+		// error handling
 		catch (FileNotFoundException e) {
 			System.out.println("An error occurred." + e);
 			e.printStackTrace();

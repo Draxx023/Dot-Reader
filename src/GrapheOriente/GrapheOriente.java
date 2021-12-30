@@ -22,7 +22,7 @@ public class GrapheOriente extends GraphePonderé{
 	public String toString() {
 		String str="";
 		for (int i=0; i<size; i++)
-			str+=sommetsOrientés.get(i).toString()+"\n";
+			str+=sommetsOrientés.get(i).toString();
 
 		return str;
 	}

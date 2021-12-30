@@ -26,16 +26,28 @@ public class SommetOriente extends SommetColoré{
 	}
 
     public String toString() {
-		String str = id + "";
-		if(color != null){
-			str += "[color=\"" + this.color + "\"]";
+		String str = "Sommet n°" + id;
+		if(color != ""){
+			str += " de couleur " + this.color;
 		}
-		str= " -> (";
-		for (int i=0; i<voisinsOrientes.size()-1; i++)
-			str+=voisinsOrientes.get(i).id + "(" + poids.get(i) + "), ";
-		if(voisinsOrientes.size()>0){
-        	int end = voisinsOrientes.size()-1; 
-			str += voisinsOrientes.get(end).id + poids.get(end) + ")\n";
+		if(voisinsOrientes.isEmpty()){
+			str += " n'a aucun voisin.\n";
+		}
+		else{
+			str += " a les voisins suivants:\n\t-> (";
+			for (int i=0; i<voisinsOrientes.size()-1; i++){
+				if(poids.get(i)!=0)
+					str+=voisinsOrientes.get(i).id + "(poids arête: " + poids.get(i) + ", ";
+				else
+					str+=voisinsOrientes.get(i).id + ", ";
+			}
+			if(voisinsOrientes.size()>0){
+				int end = voisinsOrientes.size()-1; 
+				if(poids.get(end)!=0)
+					str += voisinsOrientes.get(end).id + "(poids arête: " + poids.get(end) + "));\n";
+				else
+					str+=voisinsOrientes.get(end).id + ");\n";
+			}
 		}
 		return str;
 	}
