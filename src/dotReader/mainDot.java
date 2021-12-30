@@ -18,7 +18,13 @@ public class mainDot {
         "Entrez 1 pour choisir votre fichier ou 2 pour utiliser les fichiers de test:"); 
 
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice = 0;
+        try {
+            choice = sc.nextInt();
+        } catch (Exception e) {
+            System.out.println("Bad Input." + e);
+        }
+        
         sc.nextLine();
 
         if(choice == 1){
@@ -26,7 +32,11 @@ public class mainDot {
             String path = sc.nextLine();
             dotReader reader = new dotReader(path);
 
-            reader.readDot();
+            try {
+                reader.readDot();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
 
             System.out.println("\nFichier chargé. Lecture en cours...\n");
 
